@@ -11,16 +11,18 @@ import android.os.Bundle;
 import androidx.lifecycle.ViewModelProvider;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.snackbar.Snackbar;
+import dagger.hilt.android.AndroidEntryPoint;
 import edu.cnm.deepdive.codebreaker.R;
 import edu.cnm.deepdive.codebreaker.databinding.ActivityLoginBinding;
 import edu.cnm.deepdive.codebreaker.viewmodel.LoginViewModel;
 
+@AndroidEntryPoint
 public class LoginActivity extends AppCompatActivity {
 
- private ActivityLoginBinding binding;
- private LoginViewModel viewModel;
- private ActivityResultLauncher<Intent> launcher;
- private boolean silent;
+  private ActivityLoginBinding binding;
+  private LoginViewModel viewModel;
+  private ActivityResultLauncher<Intent> launcher;
+  private boolean silent;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -31,15 +33,18 @@ public class LoginActivity extends AppCompatActivity {
     silent = true;
     viewModel
         .getAccount()
-        .observe(this, (account) -> { /* TODO handle the changed account. */});
-    viewModel.getThrowable()
-        .observe(this, (throwable) -> {/* TODO display error message to user if not silent. */});
+        .observe(this, this::handleAccount);
+    viewModel
+        .getThrowable()
+        .observe(this, this::informFailure);
   }
 
 
   private void handleAccount(GoogleSignInAccount account) {
     if (account != null) {
-      // TODO: 2/12/2024 start MainActivity.
+     Intent intent = new Intent(this, MainActivity.class)
+         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+     startActivity(intent);
     } else if (silent) {
       silent = false;
       binding = ActivityLoginBinding.inflate(getLayoutInflater());
