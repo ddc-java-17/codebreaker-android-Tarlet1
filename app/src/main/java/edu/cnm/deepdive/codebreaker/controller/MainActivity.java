@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import dagger.hilt.android.AndroidEntryPoint;
 import edu.cnm.deepdive.codebreaker.R;
@@ -29,10 +31,10 @@ public class MainActivity extends AppCompatActivity {
     getLifecycle().addObserver(loginViewModel);
     loginViewModel
         .getAccount()
-            .observe(this, this::handleAccount);
+        .observe(this, this::handleAccount);
     loginViewModel
         .getThrowable()
-            .observe(this, this::handleThrowable);
+        .observe(this, this::handleThrowable);
     setContentView(binding.getRoot());
   }
 
@@ -48,6 +50,10 @@ public class MainActivity extends AppCompatActivity {
     boolean handled = true;
     if (item.getItemId() == R.id.sign_out) {
       loginViewModel.signOut();
+    } else if (item.getItemId() == R.id.settings) {
+      // TODO: 2/14/2024 navigate to settings.
+      Intent intent = new Intent(this, SettingsActivity.class);
+      startActivity(intent);
     } else {
       handled = super.onOptionsItemSelected(item);
     }
