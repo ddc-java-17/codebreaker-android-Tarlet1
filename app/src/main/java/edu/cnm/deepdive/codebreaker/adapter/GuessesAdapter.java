@@ -15,10 +15,12 @@ import java.util.List;
 public class GuessesAdapter extends ArrayAdapter<Guess> {
 
   private final LayoutInflater inflater;
+// TODO: 2/19/2024 Declare additional fields for map of character to string for color names, map of character, to Integer for color values, drawable.
 
   public GuessesAdapter(@NonNull Context context, @NonNull List<Guess> guesses) {
     super(context, R.layout.item_guesses, guesses);
     inflater = LayoutInflater.from(context);
+    // TODO: 2/19/2024 Create and populate maps using string array and integer array resources.
   }
 
   @NonNull
@@ -28,6 +30,8 @@ public class GuessesAdapter extends ArrayAdapter<Guess> {
         ? ItemGuessesBinding.inflate(inflater, parent, false)
         : ItemGuessesBinding.bind(convertView);
     Guess guess = getItem(position);
+    // TODO: 2/19/2024 Iterate over characters of guess using each to look up color name and
+    //  value from the maps above. Then set tint of drawable to color value and add to container.
     binding.guess.setText(guess.getContent());
     binding.correct.setText(String.valueOf(guess.getCorrect()));
     binding.close.setText(String.valueOf(guess.getClose()));

@@ -6,6 +6,7 @@
   android:layout_width="match_parent"
   android:layout_height="wrap_content">
 
+<!--  TODO replace textView below with linear layout for holding imageView.-->
   <TextView
     android:id="@+id/guess"
     android:layout_width="0dp"

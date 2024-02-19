@@ -1,5 +1,6 @@
 package edu.cnm.deepdive.codebreaker.controller;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -7,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.MenuProvider;
@@ -18,7 +20,13 @@ import edu.cnm.deepdive.codebreaker.R;
 import edu.cnm.deepdive.codebreaker.adapter.GuessesAdapter;
 import edu.cnm.deepdive.codebreaker.adapter.SwatchesAdapter;
 import edu.cnm.deepdive.codebreaker.databinding.FragmentGameBinding;
+import edu.cnm.deepdive.codebreaker.model.Game;
+import edu.cnm.deepdive.codebreaker.model.Guess;
 import edu.cnm.deepdive.codebreaker.viewmodel.CodebreakerViewModel;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class GameFragment extends Fragment implements MenuProvider {
 
@@ -37,9 +45,7 @@ public class GameFragment extends Fragment implements MenuProvider {
       @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     // load and bind layout.
     binding = FragmentGameBinding.inflate(inflater, container, false);
-    binding.submit.setOnClickListener(
-        (v) -> viewModel.submitGuess(binding.guess.getText().toString().strip()));
-    binding.colorSelector.setAdapter(new SwatchesAdapter(requireContext()));
+    binding.submit.setOnClickListener((v) -> submitGuess());
     // TODO: 2/7/2024 Initialize any view widgets, as necessary.
     return binding.getRoot();
   }
@@ -48,28 +54,8 @@ public class GameFragment extends Fragment implements MenuProvider {
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     requireActivity().addMenuProvider(this, getViewLifecycleOwner(), State.RESUMED);
-    // Connect to view models.
-    viewModel = new ViewModelProvider(requireActivity()).get(CodebreakerViewModel.class);
-    getLifecycle().addObserver(viewModel);
-    LifecycleOwner owner = getViewLifecycleOwner();
-    viewModel
-        .getGame()
-        .observe(owner, (game) -> {
-          adapter = new GuessesAdapter(requireContext(), game.getGuesses());
-          binding.guesses.setAdapter(adapter);
-        });
-    viewModel
-        .getGuess()
-        .observe(owner, (guess) -> {
-          if (adapter != null) {
-            adapter.notifyDataSetChanged();
-            binding.guesses.setSelection(adapter.getCount() - 1);
-            // TODO: 2/13/2024 scroll to make last guess visible.
-          }
-        });
-    viewModel
-        .getInProgress()
-        .observe(owner, (inProgress) -> {/* TODO Enable/disable controls on change of game state. */});
+    // Connect to viewmodels.
+    SetupViewModels();
   }
 
   @Override
@@ -87,4 +73,70 @@ public class GameFragment extends Fragment implements MenuProvider {
     }
     return handled;
   }
+
+  private void SetupViewModels() {
+    ConnectToViewModel();
+    LifecycleOwner owner = getViewLifecycleOwner();
+    ObserveGame(owner);
+    ObserveGuess(owner);
+    ObserveInProgress(owner);
+  }
+
+  private void ConnectToViewModel() {
+    viewModel = new ViewModelProvider(requireActivity()).get(CodebreakerViewModel.class);
+    getLifecycle().addObserver(viewModel);
+  }
+
+  private void ObserveGame(LifecycleOwner owner) {
+    viewModel
+        .getGame()
+        .observe(owner, (game) -> {
+          adapter = new GuessesAdapter(requireContext(), game.getGuesses());
+          binding.guesses.setAdapter(adapter);
+          createSpinners(game);
+        });
+  }
+
+  private void ObserveGuess(LifecycleOwner owner) {
+    viewModel
+        .getGuess()
+        .observe(owner, (guess) -> {
+          if (adapter != null) {
+            adapter.notifyDataSetChanged();
+            binding.guesses.setSelection(adapter.getCount() - 1);
+            // TODO: 2/13/2024 scroll to make last guess visible.
+          }
+        });
+  }
+
+  private void ObserveInProgress(LifecycleOwner owner) {
+    viewModel
+        .getInProgress()
+        .observe(owner,
+            (inProgress) -> {/* TODO Enable/disable controls on change of game state. */});
+  }
+
+  private void createSpinners(Game game) {
+    int codeLength = game.getLength();
+    List<Guess> guesses = game.getGuesses();
+    String lastGuess = (guesses.isEmpty()) ? null : guesses.get(guesses.size() - 1).getContent();
+    Context context = requireContext();
+    binding.colorSelectors.removeAllViews();
+    for (int i = 0; i < codeLength; i++) {
+      Spinner spinner = (Spinner)
+          getLayoutInflater().inflate(R.layout.color_spinner, binding.colorSelectors, false);
+      spinner.setAdapter(new SwatchesAdapter(context));
+      binding.colorSelectors.addView(spinner);
+    }
+  }
+
+  private void submitGuess() {
+    String guess = IntStream.range(0, binding.colorSelectors.getChildCount())
+        .mapToObj((pos) -> (Spinner) binding.colorSelectors.getChildAt(pos))
+        .map((spinner) -> (String) spinner.getSelectedItem())
+        .map((colorName) -> colorName.substring(0,1))
+        .collect(Collectors.joining());
+    viewModel.submitGuess(guess);
+  }
+
 }
