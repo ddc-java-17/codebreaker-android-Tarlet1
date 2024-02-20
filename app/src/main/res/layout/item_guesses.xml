@@ -4,35 +4,35 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:orientation="horizontal"
   android:layout_width="match_parent"
-  android:layout_height="wrap_content">
+  android:layout_height="wrap_content"
+  android:layout_gravity="start|center_vertical">
 
-<!--  TODO replace textView below with linear layout for holding imageView.-->
-  <TextView
+  <LinearLayout
     android:id="@+id/guess"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
+    android:orientation="horizontal"
     android:layout_weight="6"
-    android:padding="@dimen/half_dynamic_spacing"
-    style="@style/AppTheme.GuessText"
-    tools:text="ABBC"/>
+    android:padding="@dimen/half_static_spacing"/>
+
 
   <TextView
     android:id="@+id/correct"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:layout_weight="3"
-    android:padding="@dimen/half_dynamic_spacing"
+    android:padding="@dimen/half_static_spacing"
     style="@style/AppTheme.GuessText.Centered"
-  tools:text="2"/>
+    tools:text="2"/>
 
   <TextView
     android:id="@+id/close"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:layout_weight="3"
-    android:padding="@dimen/half_dynamic_spacing"
+    android:padding="@dimen/half_static_spacing"
     style="@style/AppTheme.GuessText.Centered"
-  tools:text="2"/>
+    tools:text="2"/>
 
 
 </LinearLayout>
