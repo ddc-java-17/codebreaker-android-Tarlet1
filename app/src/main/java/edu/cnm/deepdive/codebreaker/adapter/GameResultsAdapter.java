@@ -36,7 +36,7 @@ public class GameResultsAdapter extends RecyclerView.Adapter<Holder> {
 
   @Override
   public void onBindViewHolder(@NonNull Holder holder, int position) {
-    holder.bind(position, gameResults.get(position));
+    holder.bind(gameResults.get(position));
   }
 
   @Override
@@ -57,7 +57,7 @@ public class GameResultsAdapter extends RecyclerView.Adapter<Holder> {
       this.timeFormatter = timeFormatter;
     }
 
-    public void bind(int position, GameResult gameResult) {
+    public void bind(GameResult gameResult) {
       binding.guessCount.setText(String.valueOf(gameResult.getGuessCount()));
       binding.duration.setText(String.valueOf(gameResult.getDuration().getSeconds()));// FIXME: 2/22/2024 Use or time formatter.
       binding.timestamp.setText(
