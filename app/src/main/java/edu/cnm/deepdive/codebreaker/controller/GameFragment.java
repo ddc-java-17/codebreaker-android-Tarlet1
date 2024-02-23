@@ -68,6 +68,7 @@ public class GameFragment extends Fragment implements MenuProvider {
   @Override
   public void onDestroyView() {
     binding = null;
+    adapter = null;
     super.onDestroyView();
   }
 
