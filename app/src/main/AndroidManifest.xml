@@ -13,12 +13,14 @@
     android:supportsRtl="true"
     android:theme="@style/AppTheme"
     tools:ignore="AllowBackup,DataExtractionRules">
+
     <activity
       android:exported="false"
       android:name=".controller.MainActivity"/>
     <activity
       android:exported="true"
       android:name=".controller.LoginActivity">
+
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
 
