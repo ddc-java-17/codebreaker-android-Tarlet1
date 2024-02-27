@@ -22,5 +22,5 @@ erd:
 
 ## Entity classes
 
-- [`edu.cnm.deepdive.codebreaker.model.entity.GameResult`](https://github.com/ddc-java-17/codebreaker-android-Tarlet1/blob/main/app/src/main/java/edu/cnm/deepdive/codebreaker/model/entity/GameResult.java)
+- [`edu.cnm.deepdive.codebreaker.model.entity.GameResult`](api/src-html/edu/cnm/deepdive/codebreaker/model/entity/GameResult.html)
 - [`edu.cnm.deepdive.codebreaker.model.entity.User`](https://github.com/ddc-java-17/codebreaker-android-Tarlet1/blob/main/app/src/main/java/edu/cnm/deepdive/codebreaker/model/entity/User.java)
