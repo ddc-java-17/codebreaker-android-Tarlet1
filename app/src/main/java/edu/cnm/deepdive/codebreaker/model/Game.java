@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class Game {
 
+  @SerializedName("key")
   @Expose(serialize = false, deserialize = true)
   private final String id;
 
