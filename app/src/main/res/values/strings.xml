@@ -1,5 +1,8 @@
 <resources>
   <!-- TODO: Remove or change this placeholder text -->
+  <string name="nav_open">Open navigation drawer</string>
+  <string name="nav_close">Close navigation drawer</string>
+
   <string name="login_failure_message">Unable to sign in with provided credentials.</string>
   <string name="sign_out">Sign out</string>
 
