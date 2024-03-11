@@ -27,7 +27,7 @@ public class ScoresFragment extends Fragment implements OnSeekBarChangeListener 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    initialCodeLength = ScoresFragmentArgs.fromBundle(getArguments()).getCodeLength();
+    // TODO: 3/11/2024 Read initial code length from settings.
   }
 
   @Override
@@ -50,9 +50,9 @@ public class ScoresFragment extends Fragment implements OnSeekBarChangeListener 
           GameResultsAdapter adapter = new GameResultsAdapter(requireContext(), gameResults);
           binding.gameResults.setAdapter(adapter);
         });
-    binding.codeLength.setProgress(binding.codeLength.getMin());
     binding.codeLength.setProgress(binding.codeLength.getMax());
-    binding.codeLength.setProgress(initialCodeLength);
+    binding.codeLength.setProgress(binding.codeLength.getMin());
+   // binding.codeLength.setProgress(initialCodeLength);
   }
 
   @Override
