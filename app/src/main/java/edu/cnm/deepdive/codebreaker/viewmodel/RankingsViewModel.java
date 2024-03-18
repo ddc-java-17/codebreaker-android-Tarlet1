@@ -30,7 +30,8 @@ public class RankingsViewModel extends ViewModel implements DefaultLifecycleObse
     rankings = new MutableLiveData<>();
     throwable = new MutableLiveData<>();
     pending = new CompositeDisposable();
-    // TODO: 3/18/2024 send initial query to service via repository.
+    // FIXME: 3/18/2024 remove line below.
+    fetch(4,2);
   }
 
   public LiveData<List<Ranking>> getRankings() {
