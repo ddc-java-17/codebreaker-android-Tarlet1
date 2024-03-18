@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <group>
+  <group
+    android:id="@+id/game_play_group"
+    android:checkableBehavior="single">
 
     <item
       android:id="@+id/game_fragment"
       android:title="@string/game_menu_label"/>
-    <!--TODO add icon.-->
+    <!--  TODO Add icon.-->
 
     <item
       android:id="@+id/scores_fragment"
@@ -20,14 +22,20 @@
 
   </group>
 
-  <item
-    android:id="@+id/settings"
-    android:title="@string/settings"
-    android:icon="@drawable/settings"/>
+  <group
+    android:id="@+id/control_group"
+    android:checkableBehavior="single">
 
-  <item
-    android:id="@+id/sign_out"
-    android:title="@string/sign_out"
-    android:icon="@drawable/logout"/>
+    <item
+      android:id="@+id/settings_fragment"
+      android:title="@string/settings"
+      android:icon="@drawable/settings"/>
+
+    <item
+      android:id="@+id/sign_out"
+      android:title="@string/sign_out"
+      android:icon="@drawable/logout"/>
+
+  </group>
 
 </menu>
