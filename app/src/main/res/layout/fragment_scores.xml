@@ -9,7 +9,7 @@
   tools:context=".controller.ScoresFragment">
 
   <TextView
-    android:id="@+id/code_length_label"
+    android:id="@+id/code_Length_label"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginVertical="@dimen/half_dynamic_spacing"
@@ -27,9 +27,9 @@
     android:max="@integer/code_length_max"
     android:min="@integer/code_length_min"
     android:layout_margin="@dimen/half_dynamic_spacing"
-    app:layout_constraintStart_toEndOf="@id/code_length_label"
-    app:layout_constraintTop_toTopOf="@id/code_length_label"
-    app:layout_constraintBottom_toBottomOf="@id/code_length_label"
+    app:layout_constraintStart_toEndOf="@id/code_Length_label"
+    app:layout_constraintTop_toTopOf="@id/code_Length_label"
+    app:layout_constraintBottom_toBottomOf="@id/code_Length_label"
     app:layout_constraintEnd_toStartOf="@id/code_length_value"/>
 
   <TextView
@@ -40,7 +40,7 @@
     android:layout_marginStart="@dimen/half_dynamic_spacing"
     android:layout_marginEnd="@dimen/full_dynamic_spacing"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintBaseline_toBaselineOf="@id/code_length_label"
+    app:layout_constraintBaseline_toBaselineOf="@id/code_Length_label"
     tools:text="4"/>
 
   <LinearLayout
@@ -54,7 +54,7 @@
     android:theme="@style/ScoreColumn.Header"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/code_length_label">
+    app:layout_constraintTop_toBottomOf="@id/code_Length_label">
 
     <TextView
       android:id="@+id/rank_header"
@@ -70,7 +70,7 @@
       android:layout_height="wrap_content"
       android:layout_marginVertical="@dimen/half_static_spacing"
       android:layout_weight="2"
-      android:text="@string/guesses_count_header"/>
+      android:text="@string/guess_count_header"/>
 
     <TextView
       android:id="@+id/duration_header"
@@ -108,8 +108,8 @@
     android:layout_height="wrap_content"
     android:contentDescription="@string/clear_scores_description"
     android:src="@drawable/delete"
+    app:useCompatPadding="true"
     app:layout_constraintEnd_toEndOf="@id/game_results"
-    app:layout_constraintBottom_toBottomOf="@id/game_results"
-    app:useCompatPadding="true"/>
+    app:layout_constraintBottom_toBottomOf="@id/game_results"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
