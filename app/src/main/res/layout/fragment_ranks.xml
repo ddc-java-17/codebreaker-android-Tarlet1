@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
   android:paddingTop="@dimen/half_dynamic_spacing"
   tools:context=".controller.RanksFragment">
 
@@ -14,7 +14,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     app:barrierDirection="end"
-    app:constraint_referenced_ids="code_length_label, games_threshold_label"/>
+    app:constraint_referenced_ids="code_length_label,games_threshold_label"/>
 
   <TextView
     android:id="@+id/code_length_label"
@@ -34,6 +34,7 @@
     android:layout_height="wrap_content"
     android:max="@integer/code_length_max"
     android:min="@integer/code_length_min"
+    android:progress="@integer/code_length_default"
     android:layout_margin="@dimen/half_dynamic_spacing"
     app:layout_constraintStart_toEndOf="@id/label_ending_edge"
     app:layout_constraintTop_toTopOf="@id/code_length_label"
@@ -51,8 +52,6 @@
     app:layout_constraintBaseline_toBaselineOf="@id/code_length_label"
     tools:text="4"/>
 
-
-
   <TextView
     android:id="@+id/games_threshold_label"
     android:layout_width="wrap_content"
@@ -69,8 +68,9 @@
     android:id="@+id/games_threshold"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
-    android:max="@integer/code_length_max"
-    android:min="@integer/code_length_min"
+    android:max="@integer/games_threshold_max"
+    android:min="@integer/games_threshold_min"
+    android:progress="@integer/games_threshold_default"
     android:layout_margin="@dimen/half_dynamic_spacing"
     app:layout_constraintStart_toEndOf="@id/label_ending_edge"
     app:layout_constraintTop_toTopOf="@id/games_threshold_label"
@@ -88,17 +88,68 @@
     app:layout_constraintBaseline_toBaselineOf="@id/games_threshold_label"
     tools:text="4"/>
 
+  <LinearLayout
+    android:id="@+id/header_row"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/half_dynamic_spacing"
+    android:paddingTop="@dimen/half_static_spacing"
+    android:paddingHorizontal="@dimen/half_dynamic_spacing"
+    android:paddingBottom="0dp"
+    android:theme="@style/AppTheme.RankingList.Header"
+    app:layout_constraintTop_toBottomOf="@id/games_threshold">
+
+    <TextView
+      android:id="@+id/rank"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/half_static_spacing"
+      android:layout_weight="2"
+      android:text="@string/rank_header_label"
+      style="@style/RankAlignment"/>
+
+    <TextView
+      android:id="@+id/display_name"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/half_static_spacing"
+      android:layout_weight="9"
+      android:text="@string/display_name_header_label"/>
+
+    <TextView
+      android:id="@+id/avg_guess_count"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/half_static_spacing"
+      android:layout_weight="6"
+      android:text="@string/avg_guess_count_header_label"
+      style="@style/NumberAlignment"/>
+
+    <TextView
+      android:id="@+id/avg_duration"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/half_static_spacing"
+      android:layout_weight="7"
+      android:text="@string/avg_duration_header_label"
+      style="@style/NumberAlignment"/>
+
+  </LinearLayout>
+
   <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/rankings"
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:orientation="vertical"
+    android:theme="@style/AppTheme.RankingList"
     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-    app:layout_constraintTop_toBottomOf="@id/games_threshold_label"
-    app:layout_constraintBottom_toBottomOf="parent"/>
+    app:layout_constraintTop_toBottomOf="@id/header_row"
+    app:layout_constraintBottom_toBottomOf="parent"
+    tools:listitem="@layout/item_ranks"/>
 
+  <!-- TODO Add RecyclerView with LinearLayoutManager and vertical orientation, to display List<Ranking> -->
 
-  <!--  TODO Add recyclerView with linearLayoutManager and vertical orientation to display a list of ranking.-->
+  <!--  TODO Create item_rankings layout resource for individual items, along with a RecyclerView.Adapter to hold those items. -->
 
-  <!--  TODO Create item_rankings layout resource for individual items, along with a recyclerViewAdapter to hold those items.-->
 </androidx.constraintlayout.widget.ConstraintLayout>

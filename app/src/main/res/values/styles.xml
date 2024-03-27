@@ -25,7 +25,6 @@
     <item name="oddRowBackground">@color/odd_row_background</item>
   </style>
 
-
   <style name="AppTheme.GuessText">
     <item name="android:textSize">20sp</item>
   </style>
@@ -35,11 +34,11 @@
   </style>
 
   <style name="AppTheme.GuessText.Title">
-    <item name="android:textFontWeight">700</item>
+    <item name="android:textFontWeight">900</item>
   </style>
 
   <style name="AppTheme.GuessText.Centered.Title">
-    <item name="android:textFontWeight">700</item>
+    <item name="android:textFontWeight">900</item>
   </style>
 
   <style name="ScoreColumn">
@@ -58,5 +57,22 @@
     <item name="itemIconTint">@color/navigation_item_foreground</item>
     <item name="itemTextColor">@color/navigation_item_foreground</item>
   </style>
+
+  <style name="AppTheme.RankingList">
+    <item name="android:textAlignment">textStart</item>
+  </style>
+
+  <style name="AppTheme.RankingList.Header">
+    <item name="android:textFontWeight">700</item>
+  </style>
+
+  <style name="NumberAlignment">
+    <item name="android:textAlignment">textEnd</item>
+  </style>
+
+  <style name="RankAlignment">
+    <item name="android:textAlignment">center</item>
+  </style>
+
 
 </resources>

@@ -25,7 +25,9 @@ public interface CodebreakerServiceProxy {
 
   @GET("rankings")
   Single<List<Ranking>> getRankings(
-      @Query("pool-size") int poolSize, @Query("code-length") int codeLength,
-      @Query("games-threshold") int gamesThreshold, @Header("Authorization") String bearerToken);
+      @Query("pool-size") int poolSize,
+      @Query("code-length") int codeLength,
+      @Query("games-threshold") int gamesThreshold,
+      @Header("Authorization") String bearerToken);
 
 }

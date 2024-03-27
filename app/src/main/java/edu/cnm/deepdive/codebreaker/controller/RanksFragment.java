@@ -1,16 +1,18 @@
 package edu.cnm.deepdive.codebreaker.controller;
 
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 import dagger.hilt.android.AndroidEntryPoint;
-import edu.cnm.deepdive.codebreaker.R;
+import edu.cnm.deepdive.codebreaker.adapter.RanksAdapter;
 import edu.cnm.deepdive.codebreaker.databinding.FragmentRanksBinding;
 import edu.cnm.deepdive.codebreaker.viewmodel.CodebreakerViewModel;
 import edu.cnm.deepdive.codebreaker.viewmodel.PreferencesViewModel;
@@ -26,6 +28,16 @@ public class RanksFragment extends Fragment {
   public View onCreateView(
      @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     binding = FragmentRanksBinding.inflate(inflater, container, false);
+    binding.codeLength.setOnSeekBarChangeListener(
+        (SimpleOnSeekBarChangeListener)(seekBar, progress, fromUser) -> {
+          binding.codeLengthValue.setText(String.valueOf(progress));
+          rankingsViewModel.fetch(progress, binding.gamesThreshold.getProgress());
+        });
+    binding.gamesThreshold.setOnSeekBarChangeListener(
+        (SimpleOnSeekBarChangeListener) (seekBar, progress, fromUser) -> {
+          binding.gamesThresholdValue.setText(String.valueOf(progress));
+          rankingsViewModel.fetch(binding.codeLength.getProgress(), progress);
+        });
     return binding.getRoot();
   }
 
@@ -37,7 +49,7 @@ public class RanksFragment extends Fragment {
     rankingsViewModel = provider.get(RankingsViewModel.class);
     rankingsViewModel.getRankings()
         .observe(owner, (rankings) -> {
-          // TODO: 3/18/2024 Populate recycler view with rankings.
+          binding.rankings.setAdapter(new RanksAdapter(requireContext(), rankings));
         });
     CodebreakerViewModel codebreakerViewModel = provider.get(CodebreakerViewModel.class);
     codebreakerViewModel.getGame()
@@ -55,6 +67,18 @@ public class RanksFragment extends Fragment {
   public void onDestroyView() {
     binding = null;
     super.onDestroyView();
+  }
+@FunctionalInterface
+  private interface SimpleOnSeekBarChangeListener extends OnSeekBarChangeListener {
+
+    @Override
+   default void onStartTrackingTouch(SeekBar seekBar) {
+    }
+
+    @Override
+    default void onStopTrackingTouch(SeekBar seekBar) {
+    }
+
   }
 
 }
