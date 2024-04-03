@@ -103,20 +103,7 @@ public class GameResultViewModel extends ViewModel implements DefaultLifecycleOb
   private void postThrowable(Throwable throwable) {
     Log.e(TAG, throwable.getMessage(), throwable);
   }
-
-  private static class CodeLengthAllUsersLivedata extends MediatorLiveData {
-
-    private final LiveData<Integer> codeLength;
-    private final LiveData<Boolean> allUsers;
-
-    private CodeLengthAllUsersLivedata(LiveData<Integer> codeLength, LiveData<Boolean> allUsers) {
-      this.codeLength = codeLength;
-      this.allUsers = allUsers;
-      // TODO: 4/3/2024 Add sources for both parameters.
-    }
-
-  }
-
+  
   private record CodeLengthAllUsersTuple(int codeLength, boolean allUsers) {}
 
 }
