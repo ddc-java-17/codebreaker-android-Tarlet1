@@ -40,8 +40,14 @@ public class GameResultViewModel extends ViewModel implements DefaultLifecycleOb
     codeLength = new MutableLiveData<>();
     allUsers = new MutableLiveData<>(false);
     // TODO: 4/3/2024 Trigger refresh of gameResults on change of codeLength or all users.
-    gameResults = Transformations.switchMap(codeLength,
-        (codeLength) -> resultRepository.getAll(codeLength, allUsers.getValue() ? null : currentUser));
+    MediatorLiveData<CodeLengthAllUsersTuple> trigger =
+        new MediatorLiveData<>(new CodeLengthAllUsersTuple(0, false));
+    trigger.addSource(codeLength, (length) ->
+        trigger.setValue(new CodeLengthAllUsersTuple(length, trigger.getValue().allUsers())));
+    trigger.addSource(allUsers, (all) ->
+        trigger.setValue(new CodeLengthAllUsersTuple(trigger.getValue().codeLength(), all)));
+    gameResults = Transformations.switchMap(trigger, (triggerTuple) ->
+        resultRepository.getAll(triggerTuple.codeLength(), triggerTuple.allUsers() ? null : currentUser));
     throwable = new MutableLiveData<>();
     pending = new CompositeDisposable();
     loadCurrentUser();
@@ -108,6 +114,9 @@ public class GameResultViewModel extends ViewModel implements DefaultLifecycleOb
       this.allUsers = allUsers;
       // TODO: 4/3/2024 Add sources for both parameters.
     }
+
   }
+
+  private record CodeLengthAllUsersTuple(int codeLength, boolean allUsers) {}
 
 }
