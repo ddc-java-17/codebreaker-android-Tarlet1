@@ -148,8 +148,15 @@
     app:layout_constraintBottom_toBottomOf="parent"
     tools:listitem="@layout/item_ranks"/>
 
-  <!-- TODO Add RecyclerView with LinearLayoutManager and vertical orientation, to display List<Ranking> -->
-
-  <!--  TODO Create item_rankings layout resource for individual items, along with a RecyclerView.Adapter to hold those items. -->
+  <ProgressBar
+    android:id="@+id/wait_indicator"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:indeterminate="true"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintVertical_bias="0.45"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
